@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 19:02:00 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:47:36 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft_printf.h"
 #include "ft_printfparser.h"
 #include "ft_printfutils.h"
+#include "ft_printfints.h"
 
 static void	ft_printfint_symbol(int nbr, t_flags flags)
 {
@@ -32,99 +33,96 @@ static void	ft_printfint_symbol(int nbr, t_flags flags)
 		write(1, "-", 1);
 }
 
-static ssize_t	ft_printfint_normal(int nbr, t_flags flags, t_uint width, ssize_t len)
+ssize_t	ft_printfintn(t_info info, int symbol, t_flags flags)
 {
 	int		index;
+	ssize_t	len;
 
 	index = 0;
-	if (width > len)
+	if (info.width > info.len + symbol)
 	{
 		if (!(flags & ZERO_PADDING) && !(flags & LEFT_JUSTIFY))
-			padding_char(width - len, ' ');
-		ft_printfint_symbol(nbr, flags);
+			padding_char(info.width - (info.len + symbol), ' ');
+		ft_printfint_symbol(info.nbr, flags);
 		if (flags & ZERO_PADDING && !(flags & LEFT_JUSTIFY))
-			padding_char(width - len, '0');
-		ft_putnbr(nbr, &index, -1);
+			padding_char(info.width - (info.len + symbol), '0');
+		ft_putnbr(info.nbr, &index, -1);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(width - len, ' ');
-		len = width;
+			padding_char(info.width - (info.len + symbol), ' ');
+		len = info.width;
 	}
 	else
 	{
-		ft_printfint_symbol(nbr, flags);
-		ft_putnbr(nbr, &index, -1);
+		ft_printfint_symbol(info.nbr, flags);
+		ft_putnbr(info.nbr, &index, -1);
+		len = info.len + symbol;
 	}
 	return (len);
 }
 
-static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssize_t precision)
+static ssize_t	ft_printfintpp(t_info info, int symbol, t_flags flags)
+{
+	int		index;
+	ssize_t	len;
+
+	index = 0;
+	if (info.width > info.precision + symbol)
+	{
+		if (!(flags & LEFT_JUSTIFY))
+			padding_char(info.width - (info.precision + symbol), ' ');
+		ft_printfint_symbol(info.nbr, flags);
+		padding_char(info.precision - info.len, '0');
+		ft_putnbr(info.nbr, &index, info.len);
+		if (flags & LEFT_JUSTIFY)
+			padding_char(info.width - (info.precision + symbol), ' ');
+		len = info.width;
+	}
+	else
+	{
+		ft_printfint_symbol(info.nbr, flags);
+		padding_char(info.precision - info.len, '0');
+		ft_putnbr(info.nbr, &index, info.len);
+		len = info.precision + symbol;
+	}
+	return (len);
+}
+
+static ssize_t	ft_printfintnn(t_info info, int symbol, t_flags flags, int *id)
+{
+	ssize_t	len;
+
+	if (info.width >= info.len + symbol)
+	{
+		if (!(flags & LEFT_JUSTIFY))
+			padding_char(info.width - (info.len + symbol), ' ');
+		ft_printfint_symbol(info.nbr, flags);
+		if (info.precision != 0 || info.nbr != 0)
+			ft_putnbr(info.nbr, id, -1);
+		else
+			write(1, " ", 1);
+		if (flags & LEFT_JUSTIFY)
+			padding_char(info.width - (info.len + symbol), ' ');
+		len = info.width;
+	}
+	else
+	{
+		ft_printfint_symbol(info.nbr, flags);
+		if (info.precision != 0 || info.nbr != 0)
+			ft_putnbr(info.nbr, id, info.len);
+		len = info.len + symbol;
+	}
+	return (len);
+}
+
+ssize_t	ft_printfintp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 	int		index;
-	int		additional;
 
-	len = get_numdigits(nbr, 10);
-	additional = nbr < 0 || flags & SIGN_SYMBOL
-		|| (flags & SPACE_SIGN && (nbr >= 0 || flags & ZERO_PADDING));
 	index = 0;
-	if (precision > len)
-	{
-		if (width > precision + additional)
-		{
-			if (!(flags & LEFT_JUSTIFY))
-					padding_char(width - (precision + additional), ' ');
-			ft_printfint_symbol(nbr, flags);
-			padding_char(precision - len, '0');
-			ft_putnbr(nbr, &index, len);
-			if (flags & LEFT_JUSTIFY)
-				padding_char(width - (precision + additional), ' ');
-			len = width;
-		}
-		else
-		{
-			ft_printfint_symbol(nbr, flags);
-			padding_char(precision - len, '0');
-			ft_putnbr(nbr, &index, len);
-			len = precision + additional;
-		}
-	}
+	if (info.precision > info.len)
+		len = ft_printfintpp(info, symbol, flags);
 	else
-	{
-		if (width > len + additional)
-		{
-			if (!(flags & LEFT_JUSTIFY))
-					padding_char(width - (len + additional), ' ');
-			ft_printfint_symbol(nbr, flags);
-			if (precision != 0 || nbr != 0)
-				ft_putnbr(nbr, &index, len);
-			if (flags & LEFT_JUSTIFY)
-				padding_char(width - (len + additional), ' ');
-			len = width;
-		}
-		else
-		{
-			ft_printfint_symbol(nbr, flags);
-			if (precision != 0 || nbr != 0)
-				ft_putnbr(nbr, &index, len);
-			len += additional;
-		}
-	}
-	return (len);
-}
-
-ssize_t	ft_printfint(va_list ap, t_flags flags, t_uint width, ssize_t precision)
-{
-	int		nbr;
-	ssize_t	len;
-	int		additional;
-
-	nbr = va_arg(ap, int);
-	len = get_numdigits(nbr, 10);
-	additional = nbr < 0 || flags & SIGN_SYMBOL
-		|| (flags & SPACE_SIGN && (nbr >= 0 || flags & ZERO_PADDING));
-	if (precision == -1)
-		len = ft_printfint_normal(nbr, flags, width, len + additional);
-	else
-		len = ft_printfint_precision(nbr, flags, width, precision);
+		len = ft_printfintnn(info, symbol, flags, &index);
 	return (len);
 }
