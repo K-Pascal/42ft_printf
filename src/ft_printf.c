@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/20 14:03:06 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:12:13 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
 		if (info.width > 0)
 		{
 			ft_putunbr(info.width, 10, 0);
-			len++;
+			len += get_numudigits(info.width, 10);
 		}
 		if (info.precision != -1)
 		{
 			write(1, ".", 1);
 			ft_putunbr(info.precision, 10, 0);
-			len++;
+			len += get_numudigits(info.precision, 10) + 1;
 		}
 	}
 	return (len);
@@ -98,7 +98,11 @@ static ssize_t	ft_printf_transform(char const format[], va_list args, int *i)
 	}
 	len = ft_printf_format(format[*i], flags, info, args);
 	if (len == -1)
+	{
 		len = ft_printf_fail(format + *i, flags, info);
+		if (len != -1)
+			len += write(1, format + *i, 1);
+	}
 	return (len);
 }
 
