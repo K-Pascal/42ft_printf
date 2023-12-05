@@ -24,7 +24,7 @@ LIBFTOBJ := $(LIBFTSRC:.c=.o)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-GDB := -g
+GDB := 
 
 NAME := libftprintf.a
 MYLIB := libft.a
