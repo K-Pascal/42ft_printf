@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 18:47:23 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:18:27 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 #include "ft_printfparser.h"
-#include "ft_printf_chars.h"
-#include "ft_printf_ints.h"
+#include "ft_printfchars.h"
+#include "ft_printfints.h"
 
 int	ft_printf(char const format[], ...)
 {
@@ -59,16 +59,13 @@ int	ft_printf(char const format[], ...)
 			else if (format[i] == 'p')
 				len += ft_printfptr(args, flags, width);
 			else if (format[i] == 'd' || format[i] == 'i')
-				len += ft_printfintd(args, flags, width, precision);
+				len += ft_printfint(args, flags, width, precision);
 			else if (format[i] == 'u')
-			{
-			}
+				len += ft_printfuint(args, flags, width, precision);
 			else if (format[i] == 'x')
-			{
-			}
+				len += ft_printfhex(args, flags, width, precision);
 			else if (format[i] == 'X')
-			{
-			}
+				len += ft_printfhexu(args, flags, width, precision);
 			else if (format[i] == '%')
 				len += write(1, "%", 1);
 			else
