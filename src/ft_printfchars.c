@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:33:52 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 18:59:46 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:42:35 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ ssize_t	ft_printfchar(va_list ap, t_flags flags, t_uint width)
 		len += write(1, &c, 1);
 	return (len);
 }
-
-#include <stdio.h>
 
 ssize_t	ft_printfstr(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 {
