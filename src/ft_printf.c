@@ -47,13 +47,35 @@ int	get_numdigits(unsigned long nbr, int base)
 	return (len);
 }
 
-ssize_t	ft_printfptr(va_list ap, t_flags flags, unsigned int width)
+ssize_t	ft_printfnull(t_flags flags, uint width)
+{
+	ssize_t	len;
+
+	len = 5;
+	if (width > len)
+	{
+		if (!(flags && LEFT_JUSTIFY))
+			padding_space(width - len);
+		write(1, "(nil)", 5);
+		if (flags && LEFT_JUSTIFY)
+			padding_space(width - len);
+		len = width;
+	}
+	else
+		write(1, "(nil)", 5);
+
+	return (len);
+}
+
+ssize_t	ft_printfptr(va_list ap, t_flags flags, uint width)
 {
 	void			*ptr;
 	ssize_t			len;
 	unsigned long	lptr;
 
 	ptr = va_arg(ap, void *);
+	if (ptr == NULL)
+		return (ft_printfnull(flags, width));
 	lptr = (unsigned long)ptr;
 	len = get_numdigits(lptr, 16) + 2;
 	if (width > len)
