@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:37:03 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 16:28:28 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:44:26 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ ssize_t	ft_printfint(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 	return (len);
 }
 
-ssize_t	ft_printfuint(va_list ap, t_flags flags, t_uint width, ssize_t precision)
+ssize_t	ft_printfuint(va_list ap, t_flags flags, t_uint width, ssize_t p)
 {
 	t_uinfo	info;
 	ssize_t	len;
@@ -50,7 +50,7 @@ ssize_t	ft_printfuint(va_list ap, t_flags flags, t_uint width, ssize_t precision
 	info.nbr = va_arg(ap, t_uint);
 	info.len = get_numudigits(info.nbr, 10);
 	info.width = width;
-	info.precision = precision;
+	info.precision = p;
 	if (info.precision == -1)
 		len = ft_printfuintn(info, flags);
 	else
@@ -62,48 +62,34 @@ ssize_t	ft_printfhex(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 {
 	t_uinfo	info;
 	ssize_t	len;
-	
+	int		symbol;
+
 	info.nbr = va_arg(ap, t_uint);
 	info.len = get_numudigits(info.nbr, 16);
 	info.width = width;
 	info.precision = precision;
-	len = 0;
-	if (flags & ALTERNATE_FORM && info.nbr != 0)
-	{
-		len += write(1, "0x", 2);
-		if (width >= 2)
-			info.width -= 2;
-	}
+	symbol = (flags & ALTERNATE_FORM && info.nbr != 0) * 2;
 	if (info.precision == -1)
-		len += ft_printfhexn(info, flags, 0);
+		len = ft_printfhexn(info, flags, symbol, 0);
 	else
-		len += ft_printfhexp(info, flags, 0);
-	if (info.nbr == 0 && info.precision == 0)
-		len--;
+		len = ft_printfhexp(info, flags, symbol, 0);
 	return (len);
 }
 
-ssize_t	ft_printfhexu(va_list ap, t_flags flags, t_uint width, ssize_t precision)
+ssize_t	ft_printfhexu(va_list ap, t_flags flags, t_uint width, ssize_t p)
 {
 	t_uinfo	info;
 	ssize_t	len;
-	
+	int		symbol;
+
 	info.nbr = va_arg(ap, t_uint);
 	info.len = get_numudigits(info.nbr, 16);
 	info.width = width;
-	info.precision = precision;
-	len = 0;
-	if (flags & ALTERNATE_FORM && info.nbr != 0)
-	{
-		len += write(1, "0X", 2);
-		if (width >= 2)
-			info.width -= 2;
-	}
+	info.precision = p;
+	symbol = (flags & ALTERNATE_FORM && info.nbr != 0) * 2;
 	if (info.precision == -1)
-		len += ft_printfhexn(info, flags, 1);
+		len = ft_printfhexn(info, flags, symbol, 1);
 	else
-		len += ft_printfhexp(info, flags, 1);
-	if (info.nbr == 0 && info.precision == 0)
-		len--;
+		len = ft_printfhexp(info, flags, symbol, 1);
 	return (len);
 }
