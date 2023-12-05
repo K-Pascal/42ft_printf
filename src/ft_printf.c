@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 11:48:52 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:47:23 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,8 @@ int	ft_printf(char const format[], ...)
 				len += ft_printfstr(args, flags, width, precision);
 			else if (format[i] == 'p')
 				len += ft_printfptr(args, flags, width);
-			else if (format[i] == 'd')
-			{
-			}
-			else if (format[i] == 'i')
-			{
-			}
+			else if (format[i] == 'd' || format[i] == 'i')
+				len += ft_printfintd(args, flags, width, precision);
 			else if (format[i] == 'u')
 			{
 			}
@@ -74,9 +70,7 @@ int	ft_printf(char const format[], ...)
 			{
 			}
 			else if (format[i] == '%')
-			{
 				len += write(1, "%", 1);
-			}
 			else
 				len += write(1, format, i + 1);
 			format += i + 1;
