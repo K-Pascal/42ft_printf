@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:43:41 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 15:47:48 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:42:00 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,86 +18,101 @@
 #include "ft_printfutils.h"
 #include "ft_printfints.h"
 
-static ssize_t	ft_printfhexpp(t_uinfo info, t_flags flags, int uppercase)
+static void	ft_printfhexprefix(unsigned int nbr, t_flags flags, int uppercase)
+{
+	if (flags & ALTERNATE_FORM && nbr != 0)
+	{
+		if (uppercase)
+			write(1, "0X", 2);
+		else
+			write(1, "0x", 2);
+	}
+}
+
+static ssize_t	ft_printfhexpp(t_uinfo info, t_flags flags, int sym, int upper)
 {
 	ssize_t	len;
 
-	if (info.width > info.precision)
+	if (info.width > info.precision + sym)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_char(info.width - info.precision, ' ');
+			padding_char(info.width - (info.precision + sym), ' ');
+		ft_printfhexprefix(info.nbr, flags, upper);
 		padding_char(info.precision - info.len, '0');
-		ft_putunbr(info.nbr, 16, uppercase);
+		ft_putunbr(info.nbr, 16, upper);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - info.precision, ' ');
+			padding_char(info.width - (info.precision + sym), ' ');
 		len = info.width;
 	}
 	else
 	{
+		ft_printfhexprefix(info.nbr, flags, upper);
 		padding_char(info.precision - info.len, '0');
-		ft_putunbr(info.nbr, 16, uppercase);
-		len = info.precision;
+		ft_putunbr(info.nbr, 16, upper);
+		len = info.precision + sym;
 	}
 	return (len);
 }
 
-static ssize_t	ft_printfhexnn(t_uinfo info, t_flags flags, int uppercase)
+static ssize_t	ft_printfhexnn(t_uinfo info, t_flags flags, int sym, int upper)
 {
 	ssize_t	len;
 
-	if (info.width >= info.len)
+	if (info.width >= info.len + sym)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_char(info.width - info.len, ' ');
+			padding_char(info.width - (info.len + sym), ' ');
+		ft_printfhexprefix(info.nbr, flags, upper);
 		if (info.precision != 0 || info.nbr != 0)
-			ft_putunbr(info.nbr, 16, uppercase);
+			ft_putunbr(info.nbr, 16, upper);
 		else
 			write(1, " ", 1);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - info.len, ' ');
+			padding_char(info.width - (info.len + sym), ' ');
 		len = info.width;
 	}
 	else
 	{
+		ft_printfhexprefix(info.nbr, flags, upper);
 		if (info.precision != 0 || info.nbr != 0)
-			ft_putunbr(info.nbr, 16, uppercase);
-		len = info.len;
+			ft_putunbr(info.nbr, 16, upper);
+		len = info.len * (info.precision != 0 || info.nbr != 0) + sym;
 	}
 	return (len);
 }
 
-ssize_t	ft_printfhexn(t_uinfo info, t_flags flags, int uppercase)
+ssize_t	ft_printfhexn(t_uinfo info, t_flags flags, int symbol, int uppercase)
 {
 	ssize_t	len;
 
-	if (info.width > info.len)
+	if (info.width > info.len + symbol)
 	{
 		if (!(flags & ZERO_PADDING) && !(flags & LEFT_JUSTIFY))
-			padding_char(info.width - info.len, ' ');
+			padding_char(info.width - (info.len + symbol), ' ');
+		ft_printfhexprefix(info.nbr, flags, uppercase);
 		if (flags & ZERO_PADDING && !(flags & LEFT_JUSTIFY))
 			padding_char(info.width - info.len, '0');
 		ft_putunbr(info.nbr, 16, uppercase);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - info.len, ' ');
+			padding_char(info.width - (info.len + symbol), ' ');
 		len = info.width;
 	}
 	else
 	{
+		ft_printfhexprefix(info.nbr, flags, uppercase);
 		ft_putunbr(info.nbr, 16, uppercase);
-		len = info.len;
+		len = info.len + symbol;
 	}
 	return (len);
 }
 
-ssize_t	ft_printfhexp(t_uinfo info, t_flags flags, int uppercase)
+ssize_t	ft_printfhexp(t_uinfo info, t_flags flags, int symbol, int uppercase)
 {
 	ssize_t	len;
-	int		index;
 
-	index = 0;
 	if (info.precision > info.len)
-		len = ft_printfhexpp(info, flags, uppercase);
+		len = ft_printfhexpp(info, flags, symbol, uppercase);
 	else
-		len = ft_printfhexnn(info, flags, uppercase);
+		len = ft_printfhexnn(info, flags, symbol, uppercase);
 	return (len);
 }
