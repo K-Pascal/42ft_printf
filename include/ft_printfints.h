@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:32:03 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 14:37:18 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:19:30 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,6 @@ typedef struct s_uinfo
 ssize_t	ft_printfptr(va_list ap, t_flags flags, t_uint width);
 ssize_t	ft_printfint(va_list ap, t_flags flags, t_uint width, ssize_t precision);
 ssize_t	ft_printfuint(va_list ap, t_flags flags, t_uint width, ssize_t precision);
+ssize_t	ft_printfhex(va_list ap, t_flags flags, t_uint width, ssize_t precision);
+ssize_t	ft_printfhexu(va_list ap, t_flags flags, t_uint width, ssize_t precision);
 #endif
