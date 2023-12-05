@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:29:05 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 19:00:12 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:33:02 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "ft_printfparser.h"
 #include "ft_printfutils.h"
 
-ssize_t	ft_printfhexnull(t_flags flags, t_uint width)
+static ssize_t	ft_printfhexnull(t_flags flags, t_uint width)
 {
 	ssize_t	len;
 
