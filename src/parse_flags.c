@@ -6,11 +6,11 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:14:08 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 13:09:57 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:42:34 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ftprintf_parser.h"
+#include "ft_printfparser.h"
 
 t_flags	get_flags(char const str[], int *i)
 {
@@ -45,7 +45,7 @@ unsigned int	get_width(char const str[], int *i)
 	unsigned int	nbr;
 
 	nbr = 0;
-	while (*str != '\0' && *str > '0' && *str <= '9')
+	while (*str != '\0' && *str >= '0' && *str <= '9')
 	{
 		nbr = nbr * 10 + *str - '0';
 		str++;
@@ -53,5 +53,3 @@ unsigned int	get_width(char const str[], int *i)
 	}
 	return (nbr);
 }
-
-//void	*printf_parse(char c, int flags, unsigned int width, unsigned int precision)
