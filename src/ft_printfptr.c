@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:29:05 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 14:11:06 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:42:47 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static ssize_t	ft_printfhexnull(t_flags flags, t_uint width)
 	}
 	else
 		write(1, "(nil)", 5);
-
 	return (len);
 }
 
