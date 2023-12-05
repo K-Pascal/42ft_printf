@@ -45,7 +45,6 @@ ssize_t	ft_printfuint(va_list ap, t_flags flags, t_uint width, ssize_t precision
 	t_uinfo	info;
 	ssize_t	len;
 
-	(void)flags;
 	info.nbr = va_arg(ap, t_uint);
 	info.len = get_numudigits(info.nbr, 10);
 	info.width = width;
