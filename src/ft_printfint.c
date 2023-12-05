@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printfintd.c                                    :+:      :+:    :+:   */
+/*   ft_printfint.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 17:25:31 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:52:15 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "ft_printfparser.h"
 #include "ft_printf_utils.h"
 
-void	ft_printfintd_symbol(int nbr, t_flags flags)
+static void	ft_printfint_symbol(int nbr, t_flags flags)
 {
 	if (nbr >= 0)
 	{
@@ -32,7 +32,7 @@ void	ft_printfintd_symbol(int nbr, t_flags flags)
 		write(1, "-", 1);
 }
 
-ssize_t	ft_printfintd_normal(int nbr, t_flags flags, t_uint width, ssize_t len)
+static ssize_t	ft_printfint_normal(int nbr, t_flags flags, t_uint width, ssize_t len)
 {
 	int		index;
 
@@ -57,7 +57,7 @@ ssize_t	ft_printfintd_normal(int nbr, t_flags flags, t_uint width, ssize_t len)
 	return (len);
 }
 
-ssize_t	ft_printfintd_precision(int nbr, t_flags flags, t_uint width, ssize_t precision)
+static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssize_t precision)
 {
 	ssize_t	len;
 	int		index;
@@ -112,7 +112,7 @@ ssize_t	ft_printfintd_precision(int nbr, t_flags flags, t_uint width, ssize_t pr
 	return (len);
 }
 
-ssize_t	ft_printfintd(va_list ap, t_flags flags, t_uint width, ssize_t precision)
+ssize_t	ft_printfint(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 {
 	int		nbr;
 	ssize_t	len;
