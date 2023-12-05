@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:33:52 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 11:57:39 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:53:53 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdarg.h>
 
 #include "libft/libft.h"
+#include "ft_printf.h"
 #include "ft_printfparser.h"
 #include "ft_printf_utils.h"
 
@@ -60,14 +61,16 @@ ssize_t	ft_printfchar(va_list ap, t_flags flags, t_uint width)
 	return (len);
 }
 
+#include <stdio.h>
+
 ssize_t	ft_printfstr(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 {
-	char		*str;
+	char const	*str;
 	size_t		len_s;
 	ssize_t		len;
 
 	len = 0;
-	str = va_arg(ap, char *);
+	str = va_arg(ap, char const *);
 	if (str == 0)
 		return (ft_printfnullstr(flags, width, precision));
 	len_s = ft_strlen(str);
