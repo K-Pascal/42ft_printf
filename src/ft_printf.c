@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/21 11:12:13 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/05 20:23:24 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 #include "ft_printfchars.h"
 #include "ft_printfints.h"
 #include "ft_printfutils.h"
-
-typedef struct s_nums
-{
-	t_uint	width;
-	ssize_t	precision;
-}	t_nums;
 
 static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
 {
