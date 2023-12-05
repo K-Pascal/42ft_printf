@@ -6,15 +6,16 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 17:43:02 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:07:53 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <sys/types.h>
 
 #include "libft/libft.h"
 
-void	padding_char(unsigned int len, char c)
+void	padding_char(ssize_t len, char c)
 {
 	while (len-- > 0)
 		write(1, &c, 1);

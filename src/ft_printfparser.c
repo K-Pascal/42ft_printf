@@ -6,13 +6,13 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:14:08 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 14:31:33 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:43:28 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printfparser.h"
 
-t_flags	get_flags(char const str[], int *i)
+t_flags	ft_printf_getflags(char const str[], int *i)
 {
 	t_flags	flags;
 	t_flags	newflags;
@@ -40,7 +40,7 @@ t_flags	get_flags(char const str[], int *i)
 	return (flags);
 }
 
-unsigned int	get_width(char const str[], int *i)
+unsigned int	ft_printf_atoi(char const str[], int *i)
 {
 	unsigned int	nbr;
 
