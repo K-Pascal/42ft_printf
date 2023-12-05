@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:29:05 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/17 15:33:02 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 14:11:06 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ ssize_t	ft_printfptr(va_list ap, t_flags flags, t_uint width)
 		if (!(flags & LEFT_JUSTIFY))
 			padding_char(width - len, ' ');
 		write(1, "0x", 2);
-		ft_puthex(lptr, 0);
+		ft_putunbr(lptr, 16, 0);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(width - len, ' ');
 		len = width;
@@ -63,7 +63,7 @@ ssize_t	ft_printfptr(va_list ap, t_flags flags, t_uint width)
 	else
 	{
 		write(1, "0x", 2);
-		ft_puthex(lptr, 0);
+		ft_putunbr(lptr, 16, 0);
 	}
 	return (len);
 }
