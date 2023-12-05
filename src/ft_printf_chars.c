@@ -6,16 +6,18 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:33:52 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 18:35:10 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:57:39 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdarg.h>
 
 #include "libft/libft.h"
-#include "ft_printf.h"
+#include "ft_printfparser.h"
+#include "ft_printf_utils.h"
 
-ssize_t	ft_printfnullstr(t_flags flags, uint width, ssize_t precision)
+ssize_t	ft_printfnullstr(t_flags flags, t_uint width, ssize_t precision)
 {
 	if (precision != -1 && precision < 6)
 		precision = 0;
@@ -24,10 +26,10 @@ ssize_t	ft_printfnullstr(t_flags flags, uint width, ssize_t precision)
 	if (width > precision)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_space(width - precision);
+			padding_char(width - precision, ' ');
 		write(1, "(null)", precision);
 		if (flags & LEFT_JUSTIFY)
-			padding_space(width - precision);
+			padding_char(width - precision, ' ');
 	}
 	else
 	{
@@ -37,7 +39,7 @@ ssize_t	ft_printfnullstr(t_flags flags, uint width, ssize_t precision)
 	return (width);
 }
 
-ssize_t	ft_printfchar(va_list ap, t_flags flags, uint width)
+ssize_t	ft_printfchar(va_list ap, t_flags flags, t_uint width)
 {
 	char	c;
 	ssize_t	len;
@@ -47,10 +49,10 @@ ssize_t	ft_printfchar(va_list ap, t_flags flags, uint width)
 	if (width > 1)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_space(width - 1);
+			padding_char(width - 1, ' ');
 		len += write(1, &c, 1);
 		if (flags & LEFT_JUSTIFY)
-			padding_space(width - 1);
+			padding_char(width - 1, ' ');
 		len += width - 1;
 	}
 	else
@@ -58,7 +60,7 @@ ssize_t	ft_printfchar(va_list ap, t_flags flags, uint width)
 	return (len);
 }
 
-ssize_t	ft_printfstr(va_list ap, t_flags flags, uint width, ssize_t precision)
+ssize_t	ft_printfstr(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 {
 	char		*str;
 	size_t		len_s;
@@ -74,10 +76,10 @@ ssize_t	ft_printfstr(va_list ap, t_flags flags, uint width, ssize_t precision)
 	if (width > precision)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_space(width - precision);
+			padding_char(width - precision, ' ');
 		len += write(1, str, precision);
 		if (flags & LEFT_JUSTIFY)
-			padding_space(width - precision);
+			padding_char(width - precision, ' ');
 		len += width - precision;
 	}
 	else
