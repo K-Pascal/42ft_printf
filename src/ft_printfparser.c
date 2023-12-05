@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:14:08 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 17:42:34 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:31:33 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_flags	get_flags(char const str[], int *i)
 		if (newflags == 0)
 			break ;
 		(*i)++;
-		flags = newflags;
+		flags |= newflags;
 		str++;
 	}
 	return (flags);
