@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 17:38:07 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:26:14 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	ft_putnbr(int nbr, int *index, int end)
 {
 	if (nbr < 0)
 	{
-		ft_putchar_fd('-', 1);
 		if (nbr <= -10)
 			ft_putnbr(-(nbr / 10), index, end);
 		if (end == -1 || *index < end)
 			ft_putchar_fd(-(nbr % 10) + '0', 1);
+
 	}
 	else
 	{
