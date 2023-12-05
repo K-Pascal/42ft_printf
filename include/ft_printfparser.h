@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftprintf_parser.h                                  :+:      :+:    :+:   */
+/*   ft_printfparser.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:25:07 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 13:08:28 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:44:16 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FTPRINTF_PARSER_H
-# define FTPRINTF_PARSER_H
+#ifndef FT_PRINTFPARSER_H
+# define FT_PRINTFPARSER_H
 
 typedef enum e_flags
 {
@@ -20,8 +20,8 @@ typedef enum e_flags
 	SPACE_SIGN = (1 << 2),
 	ALTERNATE_FORM = (1 << 3),
 	ZERO_PADDING = (1 << 4)
-} t_flags;
+}	t_flags;
 
-t_flags			get_flags(char const str[], int *i);
-unsigned int	get_width(char const str[], int *i);
+t_flags			ft_printf_getflags(char const str[], int *i);
+unsigned int	ft_printf_atoi(char const str[], int *i);
 #endif

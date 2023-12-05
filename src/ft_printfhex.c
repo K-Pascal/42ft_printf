@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:43:41 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 17:42:00 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:41:29 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,17 @@ static ssize_t	ft_printfhexpp(t_uinfo info, t_flags flags, int sym, int upper)
 	return (len);
 }
 
-static ssize_t	ft_printfhexnn(t_uinfo info, t_flags flags, int sym, int upper)
+static ssize_t	ft_printfhexnp(t_uinfo info, t_flags flags, int sym, int upper)
 {
 	ssize_t	len;
 
-	if (info.width >= info.len + sym)
+	if (info.width > info.len + sym)
 	{
 		if (!(flags & LEFT_JUSTIFY))
 			padding_char(info.width - (info.len + sym), ' ');
 		ft_printfhexprefix(info.nbr, flags, upper);
-		if (info.precision != 0 || info.nbr != 0)
+		if (info.len > 0)
 			ft_putunbr(info.nbr, 16, upper);
-		else
-			write(1, " ", 1);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(info.width - (info.len + sym), ' ');
 		len = info.width;
@@ -74,9 +72,9 @@ static ssize_t	ft_printfhexnn(t_uinfo info, t_flags flags, int sym, int upper)
 	else
 	{
 		ft_printfhexprefix(info.nbr, flags, upper);
-		if (info.precision != 0 || info.nbr != 0)
+		if (info.len > 0)
 			ft_putunbr(info.nbr, 16, upper);
-		len = info.len * (info.precision != 0 || info.nbr != 0) + sym;
+		len = info.len + sym;
 	}
 	return (len);
 }
@@ -110,9 +108,11 @@ ssize_t	ft_printfhexp(t_uinfo info, t_flags flags, int symbol, int uppercase)
 {
 	ssize_t	len;
 
+	if (info.precision == 0 && info.nbr == 0)
+		info.len = 0;
 	if (info.precision > info.len)
 		len = ft_printfhexpp(info, flags, symbol, uppercase);
 	else
-		len = ft_printfhexnn(info, flags, symbol, uppercase);
+		len = ft_printfhexnp(info, flags, symbol, uppercase);
 	return (len);
 }

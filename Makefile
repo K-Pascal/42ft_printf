@@ -53,4 +53,4 @@ bonus: all
 .PHONY: norm
 norm:
 	norminette -R CheckForbiddenSourceHeader $(SRC) $(LIBFTSRC)
-	norminette -R CheckDefine $(LIBFTPATH)/libft.h $(INCLUDEDIR)/*.h
+	norminette -R CheckDefine $(INCLUDEDIR)/

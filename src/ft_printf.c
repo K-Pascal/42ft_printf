@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 16:18:27 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 20:02:25 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,97 @@
 #include "ft_printfparser.h"
 #include "ft_printfchars.h"
 #include "ft_printfints.h"
+#include "ft_printfutils.h"
+
+typedef struct s_nums
+{
+	t_uint	width;
+	ssize_t	precision;
+}	t_nums;
+
+static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
+{
+	ssize_t	len;
+
+	if (ft_isalpha(*(str++)))
+	{
+		len = write(1, "%", 1);
+		if (flags & ALTERNATE_FORM)
+			len += write(1, "#", 1);
+		if (flags & SIGN_SYMBOL)
+			len += write(1, "+", 1);
+		if (flags & LEFT_JUSTIFY)
+			len += write(1, "-", 1);
+		if (info.width > 0)
+		{
+			ft_putunbr(info.width, 10, 0);
+			len++;
+		}
+		if (info.precision != -1)
+		{
+			ft_putunbr(info.precision, 10, 0);
+			len++;
+		}
+	}
+	else
+		len = -1;
+	return (len);
+}
+
+ssize_t	ft_printf_format(char const c, t_flags flags, t_nums info, va_list ap)
+{
+	ssize_t	len;
+
+	if (c == 'c')
+		len = ft_printfchar(ap, flags, info.width);
+	else if (c == 's')
+		len = ft_printfstr(ap, flags, info.width, info.precision);
+	else if (c == 'p')
+		len = ft_printfptr(ap, flags, info.width);
+	else if (c == 'd' || c == 'i')
+		len = ft_printfint(ap, flags, info.width, info.precision);
+	else if (c == 'u')
+		len = ft_printfuint(ap, flags, info.width, info.precision);
+	else if (c == 'x')
+		len = ft_printfhex(ap, flags, info.width, info.precision);
+	else if (c == 'X')
+		len = ft_printfhexu(ap, flags, info.width, info.precision);
+	else
+		len = -1;
+	return (len);
+}
+
+static ssize_t	ft_printf_transform(char const format[], va_list args, int *i)
+{
+	ssize_t	len;
+	t_flags	flags;
+	t_nums	info;
+
+	*i = 1;
+	flags = ft_printf_getflags(format + *i, i);
+	info.width = ft_printf_atoi(format + *i, i);
+	info.precision = -1;
+	if (format[*i] == '.')
+	{
+		(*i)++;
+		info.precision = ft_printf_atoi(format + *i, i);
+	}
+	len = ft_printf_format(format[*i], flags, info, args);
+	if (len == -1)
+		len = ft_printf_fail(format + *i, flags, info);
+	return (len);
+}
 
 int	ft_printf(char const format[], ...)
 {
 	va_list			args;
 	int				i;
-	t_flags			flags;
 	ssize_t			len;
-	uint			width;
-	ssize_t			precision;
 
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
 	i = 0;
-	flags = 0;
 	len = 0;
 	while (format[i] != '\0')
 	{
@@ -43,33 +119,7 @@ int	ft_printf(char const format[], ...)
 		{
 			len += write(1, format, i);
 			format += i;
-			i = 1;
-			flags = get_flags(format + i, &i);
-			width = get_width(format + i, &i);
-			precision = -1;
-			if (format[i] == '.')
-			{
-				i++;
-				precision = get_width(format + i, &i);
-			}
-			if (format[i] == 'c')
-				len += ft_printfchar(args, flags, width);
-			else if (format[i] == 's')
-				len += ft_printfstr(args, flags, width, precision);
-			else if (format[i] == 'p')
-				len += ft_printfptr(args, flags, width);
-			else if (format[i] == 'd' || format[i] == 'i')
-				len += ft_printfint(args, flags, width, precision);
-			else if (format[i] == 'u')
-				len += ft_printfuint(args, flags, width, precision);
-			else if (format[i] == 'x')
-				len += ft_printfhex(args, flags, width, precision);
-			else if (format[i] == 'X')
-				len += ft_printfhexu(args, flags, width, precision);
-			else if (format[i] == '%')
-				len += write(1, "%", 1);
-			else
-				len += write(1, format, i + 1);
+			len += ft_printf_transform(format, args, &i);
 			format += i + 1;
 			i = 0;
 		}

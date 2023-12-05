@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 17:39:43 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:41:49 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,17 @@ static ssize_t	ft_printfintpp(t_info info, int symbol, t_flags flags)
 	return (len);
 }
 
-static ssize_t	ft_printfintnn(t_info info, int symbol, t_flags flags)
+static ssize_t	ft_printfintnp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
-	if (info.width >= info.len + symbol)
+	if (info.width > info.len + symbol)
 	{
 		if (!(flags & LEFT_JUSTIFY))
 			padding_char(info.width - (info.len + symbol), ' ');
 		ft_printfint_symbol(info.nbr, flags);
-		if (info.precision != 0 || info.nbr != 0)
+		if (info.len > 0)
 			ft_putnbr(info.nbr);
-		else
-			write(1, " ", 1);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(info.width - (info.len + symbol), ' ');
 		len = info.width;
@@ -76,9 +74,9 @@ static ssize_t	ft_printfintnn(t_info info, int symbol, t_flags flags)
 	else
 	{
 		ft_printfint_symbol(info.nbr, flags);
-		if (info.precision != 0 || info.nbr != 0)
+		if (info.len > 0)
 			ft_putnbr(info.nbr);
-		len = info.len * (info.nbr != 0 || info.precision != 0) + symbol;
+		len = info.len + symbol;
 	}
 	return (len);
 }
@@ -112,9 +110,11 @@ ssize_t	ft_printfintp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
+	if (info.precision == 0 && info.nbr == 0)
+		info.len = 0;
 	if (info.precision > info.len)
 		len = ft_printfintpp(info, symbol, flags);
 	else
-		len = ft_printfintnn(info, symbol, flags);
+		len = ft_printfintnp(info, symbol, flags);
 	return (len);
 }
