@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 14:24:29 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:39:43 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static ssize_t	ft_printfintnn(t_info info, int symbol, t_flags flags)
 		ft_printfint_symbol(info.nbr, flags);
 		if (info.precision != 0 || info.nbr != 0)
 			ft_putnbr(info.nbr);
-		len = info.len + symbol;
+		len = info.len * (info.nbr != 0 || info.precision != 0) + symbol;
 	}
 	return (len);
 }

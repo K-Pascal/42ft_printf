@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:57:59 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 14:42:00 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:41:34 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static ssize_t	ft_printfuintnn(t_uinfo info, t_flags flags)
 	{
 		if (info.precision != 0 || info.nbr != 0)
 			ft_putunbr(info.nbr, 10, 0);
-		len = info.len;
+		len = info.len * (info.precision != 0 || info.nbr != 0);
 	}
 	return (len);
 }
@@ -92,9 +92,7 @@ ssize_t	ft_printfuintn(t_uinfo info, t_flags flags)
 ssize_t	ft_printfuintp(t_uinfo info, t_flags flags)
 {
 	ssize_t	len;
-	int		index;
 
-	index = 0;
 	if (info.precision > info.len)
 		len = ft_printfuintpp(info, flags);
 	else
