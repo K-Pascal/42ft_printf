@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:29:05 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:27:15 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:36:40 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/types.h>
 
 #include "libft/libft.h"
+#include "ft_printf.h"
 #include "ft_printfparser.h"
 #include "ft_printf_utils.h"
 
@@ -48,7 +49,7 @@ ssize_t	ft_printfptr(va_list ap, t_flags flags, t_uint width)
 	if (ptr == 0)
 		return (ft_printfhexnull(flags, width));
 	lptr = (unsigned long)ptr;
-	len = get_numdigits(lptr, 16) + 2;
+	len = get_numudigits(lptr, 16) + 2;
 	if (width > len)
 	{
 		if (!(flags & LEFT_JUSTIFY))
