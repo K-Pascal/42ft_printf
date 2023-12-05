@@ -120,13 +120,13 @@ int	ft_printf(char const format[], ...)
 			len += write(1, format, i);
 			format += i;
 			i = 1;
-			flags = get_flags(&(format[i]), &i);
-			width = get_width(&(format[i]), &i);
+			flags = get_flags(format + i, &i);
+			width = get_width(format + i, &i);
 			precision = 0;
 			if (format[i] == '.')
 			{
 				i++;
-				precision = get_width(&(format[i]), &i);
+				precision = get_width(format + i, &i);
 			}
 			if (format[i] == 'c')
 				len += ft_printfchar(args, flags, width);
