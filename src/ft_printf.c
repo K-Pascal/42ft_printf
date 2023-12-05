@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 17:41:25 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:16:49 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	ft_printf(char const format[], ...)
 	int				i;
 	t_flags			flags;
 	ssize_t			len;
-	unsigned int	width;
-	unsigned int	precision;
+	uint			width;
+	ssize_t			precision;
 
 	if (format == NULL)
 		return (-1);
@@ -122,7 +122,7 @@ int	ft_printf(char const format[], ...)
 			i = 1;
 			flags = get_flags(format + i, &i);
 			width = get_width(format + i, &i);
-			precision = 0;
+			precision = -1;
 			if (format[i] == '.')
 			{
 				i++;
