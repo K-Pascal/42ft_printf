@@ -45,7 +45,7 @@ cleantest: fclean
 
 $(NAME): $(OBJ) $(LIBFTOBJ)
 
-$(TESTNAME): $(NAME) main.c
+$(TESTNAME): $(NAME) $(OBJ) main.c
 	$(CC) $(GDB) -I $(INCLUDEDIR) main.c -L. -lftprintf -o $(TESTNAME)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
