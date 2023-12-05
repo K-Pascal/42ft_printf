@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 18:16:49 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:48:52 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,87 +14,11 @@
 #include <stddef.h>
 #include <unistd.h>
 
-#include "ft_printfparser.h"
-#include "ft_printf.h"
 #include "libft/libft.h"
-
-void	padding_space(uint len)
-{
-	while (len-- > 0)
-		write(1, " ", 1);
-}
-
-void	ft_puthex(unsigned long nbr, int uppercase)
-{
-	if (nbr >= 16)
-		ft_puthex(nbr / 16, uppercase);
-	if (uppercase)
-		ft_putchar_fd("0123456789ABCDEF"[nbr % 16], 1);
-	else
-		ft_putchar_fd("0123456789abcdef"[nbr % 16], 1);
-}
-
-int	get_numdigits(unsigned long nbr, int base)
-{
-	int	len;
-
-	len = 0;
-	while (nbr > 0)
-	{
-		len++;
-		nbr /= base;
-	}
-	return (len);
-}
-
-ssize_t	ft_printfnull(t_flags flags, uint width)
-{
-	ssize_t	len;
-
-	len = 5;
-	if (width > len)
-	{
-		if (!(flags && LEFT_JUSTIFY))
-			padding_space(width - len);
-		write(1, "(nil)", 5);
-		if (flags && LEFT_JUSTIFY)
-			padding_space(width - len);
-		len = width;
-	}
-	else
-		write(1, "(nil)", 5);
-
-	return (len);
-}
-
-ssize_t	ft_printfptr(va_list ap, t_flags flags, uint width)
-{
-	void			*ptr;
-	ssize_t			len;
-	unsigned long	lptr;
-
-	ptr = va_arg(ap, void *);
-	if (ptr == NULL)
-		return (ft_printfnull(flags, width));
-	lptr = (unsigned long)ptr;
-	len = get_numdigits(lptr, 16) + 2;
-	if (width > len)
-	{
-		if (!(flags && LEFT_JUSTIFY))
-			padding_space(width - len);
-		write(1, "0x", 2);
-		ft_puthex((unsigned long)ptr, 0);
-		if (flags && LEFT_JUSTIFY)
-			padding_space(width - len);
-		len = width;
-	}
-	else
-	{
-		write(1, "0x", 2);
-		ft_puthex((unsigned long)ptr, 0);
-	}
-	return (len);
-}
+#include "ft_printf.h"
+#include "ft_printfparser.h"
+#include "ft_printf_chars.h"
+#include "ft_printf_ints.h"
 
 int	ft_printf(char const format[], ...)
 {
