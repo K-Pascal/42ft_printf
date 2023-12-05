@@ -1,4 +1,4 @@
-FILES := ft_printf.c parse_flags.c
+FILES := ft_printf.c parse_flags.c ft_printf_chars.c
 
 SRCDIR := src
 INCLUDEDIR := include
@@ -23,6 +23,7 @@ LIBFTOBJ := $(LIBFTSRC:.c=.o)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
+GDB := 
 
 NAME := libftprintf.a
 
@@ -40,17 +41,18 @@ fclean: clean
 re: fclean $(NAME)
 
 $(NAME): $(OBJ) $(LIBFTOBJ)
-	ar rcs $@ $^
 
 $(TESTNAME): $(NAME) main.c
-	$(CC) $(CFLAGS) -I $(INCLUDEDIR) main.c -L. -lftprintf -o $(TESTNAME)
+	$(CC) $(GDB) -I $(INCLUDEDIR) main.c -L. -lftprintf -o $(TESTNAME)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(BUILDDIR)
-	$(CC) $(CFLAGS) -c -I . -I $(INCLUDEDIR) $< -o $@
+	$(CC) $(CFLAGS) $(GDB) -c -I . -I $(INCLUDEDIR) $< -o $@
+	ar rcs $(NAME) $@
 
 $(LIBFTPATH)/%.o: $(LIBFTPATH)/%.c
-	$(CC) $(CFLAGS) -c -I $(LIBFTPATH) $< -o $@
+	$(CC) $(CFLAGS) $(GDB) -c -I $(LIBFTPATH) $< -o $@
+	ar rcs $(NAME) $@
 
 .PHONY: bonus
 bonus: all

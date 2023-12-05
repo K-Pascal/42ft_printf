@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/14 16:30:36 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:41:25 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,52 +21,6 @@ void	padding_space(unsigned int len)
 {
 	while (len-- > 0)
 		write(1, " ", 1);
-}
-
-ssize_t	ft_printfchar(va_list ap, t_flags flags, unsigned int width)
-{
-	char	c;
-	ssize_t	len;
-
-	c = va_arg(ap, int);
-	len = 0;
-	if (width > 1)
-	{
-		if (!(flags & LEFT_JUSTIFY))
-			padding_space(width - 1);
-		len += write(1, &c, 1);
-		if (flags & LEFT_JUSTIFY)
-			padding_space(width - 1);
-		len += width - 1;
-	}
-	else
-		len += write(1, &c, 1);
-	return (len);
-}
-
-ssize_t	ft_printfstr(va_list ap, t_flags flags, unsigned int width, unsigned int precision)
-{
-	char		*str;
-	size_t		len_s;
-	ssize_t		len;
-
-	len = 0;
-	str = va_arg(ap, char *);
-	len_s = ft_strlen(str);
-	if (len_s < precision)
-		precision = len_s;
-	if (width > precision)
-	{
-		if (!(flags & LEFT_JUSTIFY))
-			padding_space(width - precision);
-		len += write(1, str, precision);
-		if (flags & LEFT_JUSTIFY)
-			padding_space(width - precision);
-		len += width - precision;
-	}
-	else
-		len += write(1, str, precision);
-	return (len);
 }
 
 void	ft_puthex(unsigned long nbr, int uppercase)
