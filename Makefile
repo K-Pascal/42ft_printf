@@ -1,4 +1,4 @@
-FILES := ft_printf.c parse_flags.c ft_printf_chars.c
+FILES := ft_printf.c ft_printfparser.c ft_printf_utils.c ft_printf_chars.c ft_printf_ptr.c
 
 SRCDIR := src
 INCLUDEDIR := include
