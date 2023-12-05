@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:37:03 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/18 16:17:45 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:28:28 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ ssize_t	ft_printfhexu(va_list ap, t_flags flags, t_uint width, ssize_t precision
 	len = 0;
 	if (flags & ALTERNATE_FORM && info.nbr != 0)
 	{
-		len += write(1, "0x", 2);
+		len += write(1, "0X", 2);
 		if (width >= 2)
 			info.width -= 2;
 	}
