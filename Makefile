@@ -23,13 +23,13 @@ LIBFTOBJ := $(LIBFTSRC:.c=.o)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-GDB := 
+GDB := -g
 
 NAME := libftprintf.a
 
-TESTNAME := testprintf
+TESTNAME := myprintf
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re cleantest
 all:  $(NAME)
 
 clean:
@@ -39,6 +39,9 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean $(NAME)
+
+cleantest: fclean
+	rm -f $(TESTNAME)
 
 $(NAME): $(OBJ) $(LIBFTOBJ)
 
