@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/16 17:52:15 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:02:00 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 #include "ft_printfparser.h"
-#include "ft_printf_utils.h"
+#include "ft_printfutils.h"
 
 static void	ft_printfint_symbol(int nbr, t_flags flags)
 {
@@ -41,7 +41,7 @@ static ssize_t	ft_printfint_normal(int nbr, t_flags flags, t_uint width, ssize_t
 	{
 		if (!(flags & ZERO_PADDING) && !(flags & LEFT_JUSTIFY))
 			padding_char(width - len, ' ');
-		ft_printfintd_symbol(nbr, flags);
+		ft_printfint_symbol(nbr, flags);
 		if (flags & ZERO_PADDING && !(flags & LEFT_JUSTIFY))
 			padding_char(width - len, '0');
 		ft_putnbr(nbr, &index, -1);
@@ -51,7 +51,7 @@ static ssize_t	ft_printfint_normal(int nbr, t_flags flags, t_uint width, ssize_t
 	}
 	else
 	{
-		ft_printfintd_symbol(nbr, flags);
+		ft_printfint_symbol(nbr, flags);
 		ft_putnbr(nbr, &index, -1);
 	}
 	return (len);
@@ -73,7 +73,7 @@ static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssiz
 		{
 			if (!(flags & LEFT_JUSTIFY))
 					padding_char(width - (precision + additional), ' ');
-			ft_printfintd_symbol(nbr, flags);
+			ft_printfint_symbol(nbr, flags);
 			padding_char(precision - len, '0');
 			ft_putnbr(nbr, &index, len);
 			if (flags & LEFT_JUSTIFY)
@@ -82,7 +82,7 @@ static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssiz
 		}
 		else
 		{
-			ft_printfintd_symbol(nbr, flags);
+			ft_printfint_symbol(nbr, flags);
 			padding_char(precision - len, '0');
 			ft_putnbr(nbr, &index, len);
 			len = precision + additional;
@@ -94,7 +94,7 @@ static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssiz
 		{
 			if (!(flags & LEFT_JUSTIFY))
 					padding_char(width - (len + additional), ' ');
-			ft_printfintd_symbol(nbr, flags);
+			ft_printfint_symbol(nbr, flags);
 			if (precision != 0 || nbr != 0)
 				ft_putnbr(nbr, &index, len);
 			if (flags & LEFT_JUSTIFY)
@@ -103,7 +103,7 @@ static ssize_t	ft_printfint_precision(int nbr, t_flags flags, t_uint width, ssiz
 		}
 		else
 		{
-			ft_printfintd_symbol(nbr, flags);
+			ft_printfint_symbol(nbr, flags);
 			if (precision != 0 || nbr != 0)
 				ft_putnbr(nbr, &index, len);
 			len += additional;
@@ -123,8 +123,8 @@ ssize_t	ft_printfint(va_list ap, t_flags flags, t_uint width, ssize_t precision)
 	additional = nbr < 0 || flags & SIGN_SYMBOL
 		|| (flags & SPACE_SIGN && (nbr >= 0 || flags & ZERO_PADDING));
 	if (precision == -1)
-		len = ft_printfintd_normal(nbr, flags, width, len + additional);
+		len = ft_printfint_normal(nbr, flags, width, len + additional);
 	else
-		len = ft_printfintd_precision(nbr, flags, width, precision);
+		len = ft_printfint_precision(nbr, flags, width, precision);
 	return (len);
 }
