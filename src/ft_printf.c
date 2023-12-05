@@ -14,10 +14,11 @@
 #include <stddef.h>
 #include <unistd.h>
 
-#include "ftprintf_parser.h"
+#include "ft_printfparser.h"
+#include "ft_printf.h"
 #include "libft/libft.h"
 
-void	padding_space(unsigned int len)
+void	padding_space(uint len)
 {
 	while (len-- > 0)
 		write(1, " ", 1);
