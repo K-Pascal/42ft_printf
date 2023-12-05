@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/19 20:02:25 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:03:06 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
 {
 	ssize_t	len;
 
-	if (ft_isalpha(*(str++)))
+	len = -1;
+	if (*str != '\0')
 	{
 		len = write(1, "%", 1);
 		if (flags & ALTERNATE_FORM)
@@ -47,12 +48,11 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
 		}
 		if (info.precision != -1)
 		{
+			write(1, ".", 1);
 			ft_putunbr(info.precision, 10, 0);
 			len++;
 		}
 	}
-	else
-		len = -1;
 	return (len);
 }
 
@@ -74,6 +74,8 @@ ssize_t	ft_printf_format(char const c, t_flags flags, t_nums info, va_list ap)
 		len = ft_printfhex(ap, flags, info.width, info.precision);
 	else if (c == 'X')
 		len = ft_printfhexu(ap, flags, info.width, info.precision);
+	else if (c == '%')
+		len = write(1, "%", 1);
 	else
 		len = -1;
 	return (len);
@@ -100,31 +102,45 @@ static ssize_t	ft_printf_transform(char const format[], va_list args, int *i)
 	return (len);
 }
 
+ssize_t	ft_printf_do(char const *fmt[], int *i, va_list ap, ssize_t len_total)
+{
+	ssize_t	len;
+
+	len_total += write(1, *fmt, *i);
+	*fmt += *i;
+	len = ft_printf_transform(*fmt, ap, i);
+	*fmt += *i;
+	if (len != -1)
+	{
+		len_total += len;
+		(*fmt)++;
+	}
+	else
+		len_total = -1;
+	*i = 0;
+	return (len_total);
+}
+
 int	ft_printf(char const format[], ...)
 {
-	va_list			args;
-	int				i;
-	ssize_t			len;
+	va_list	args;
+	int		i;
+	ssize_t	len_total;
 
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
 	i = 0;
-	len = 0;
+	len_total = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] != '%')
 			i++;
 		else
-		{
-			len += write(1, format, i);
-			format += i;
-			len += ft_printf_transform(format, args, &i);
-			format += i + 1;
-			i = 0;
-		}
+			len_total = ft_printf_do(&format, &i, args, len_total);
 	}
-	len += write(1, format, i);
+	if (len_total != -1)
+		len_total += write(1, format, i);
 	va_end(args);
-	return (len);
+	return (len_total);
 }
