@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:42:26 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:38:07 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ void	ft_putnbr(int nbr, int *index, int end)
 		ft_putchar_fd('-', 1);
 		if (nbr <= -10)
 			ft_putnbr(-(nbr / 10), index, end);
-		if (*index < end)
+		if (end == -1 || *index < end)
 			ft_putchar_fd(-(nbr % 10) + '0', 1);
 	}
 	else
 	{
 		if (nbr >= 10)
 			ft_putnbr(nbr / 10, index, end);
-		if (*index < end)
+		if (end == -1 || *index < end)
 			ft_putchar_fd(nbr % 10 + '0', 1);
 	}
 	(*index)++;
 }
 
-int	get_numdigits(unsigned long nbr, int base)
+int	get_numudigits(unsigned long nbr, int base)
 {
 	int	len;
 
@@ -58,6 +58,21 @@ int	get_numdigits(unsigned long nbr, int base)
 		return (1);
 	len = 0;
 	while (nbr > 0)
+	{
+		len++;
+		nbr /= base;
+	}
+	return (len);
+}
+
+int	get_numdigits(int nbr, int base)
+{
+	int	len;
+
+	if (nbr == 0)
+		return (1);
+	len = 0;
+	while (nbr != 0)
 	{
 		len++;
 		nbr /= base;
