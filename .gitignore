@@ -1,0 +1,10 @@
+.*
+!.gitignore
+*.o
+*.a
+a.out
+main.c
+myprintf
+printfTester/
+ft_printf_tester/
+printf-unit-test/
