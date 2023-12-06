@@ -28,11 +28,11 @@ LIBFT := libft.a
 all:  $(NAME)
 
 clean:
-	$(MAKE) -C $(LIBFTPATH) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJ)
 
 fclean: clean
-	$(MAKE) -C $(LIBFTPATH) fclean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all
@@ -41,7 +41,6 @@ $(NAME): $(OBJ)
 	$(MAKE) -C $(LIBFT_DIR) bonus
 	cp $(LIBFT_DIR)/$(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJ)
-	rm -f ./$(LIBFTPATH)/$(MYLIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(BUILDDIR)
