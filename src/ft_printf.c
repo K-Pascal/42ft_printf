@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/05 20:23:24 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:04:18 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ ssize_t	ft_printf_format(char const c, t_flags flags, t_nums info, va_list ap)
 	return (len);
 }
 
-static ssize_t	ft_printf_transform(char const format[], va_list args, int *i)
+static ssize_t	ft_printf_transform(char const *format[], va_list args)
 {
 	ssize_t	len;
 	t_flags	flags;
@@ -93,21 +93,18 @@ static ssize_t	ft_printf_transform(char const format[], va_list args, int *i)
 	len = ft_printf_format(format[*i], flags, info, args);
 	if (len == -1)
 	{
-		len = ft_printf_fail(format + *i, flags, info);
+		len = ft_printf_fail(*format, flags, info);
 		if (len != -1)
-			len += write(1, format + *i, 1);
+			len += write(1, *format, 1);
 	}
 	return (len);
 }
 
-ssize_t	ft_printf_do(char const *fmt[], int *i, va_list ap, ssize_t len_total)
+ssize_t	ft_printf_do(char const *fmt[], va_list ap, ssize_t len_total)
 {
 	ssize_t	len;
 
-	len_total += write(1, *fmt, *i);
-	*fmt += *i;
-	len = ft_printf_transform(*fmt, ap, i);
-	*fmt += *i;
+	len = ft_printf_transform(fmt, ap);
 	if (len != -1)
 	{
 		len_total += len;
@@ -115,7 +112,6 @@ ssize_t	ft_printf_do(char const *fmt[], int *i, va_list ap, ssize_t len_total)
 	}
 	else
 		len_total = -1;
-	*i = 0;
 	return (len_total);
 }
 
@@ -135,7 +131,12 @@ int	ft_printf(char const format[], ...)
 		if (format[i] != '%')
 			i++;
 		else
-			len_total = ft_printf_do(&format, &i, args, len_total);
+		{
+			len_total += write(1, format, i);
+			format += i + 1;
+			len_total = ft_printf_do(&format, args, len_total);
+			i = 0;
+		}
 	}
 	if (len_total != -1)
 		len_total += write(1, format, i);

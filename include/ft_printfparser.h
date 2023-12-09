@@ -6,12 +6,14 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:25:07 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/19 18:44:16 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/09 16:32:42 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTFPARSER_H
 # define FT_PRINTFPARSER_H
+
+# include "libft/libft.h"
 
 typedef enum e_flags
 {
@@ -22,6 +24,6 @@ typedef enum e_flags
 	ZERO_PADDING = (1 << 4)
 }	t_flags;
 
-t_flags			ft_printf_getflags(char const str[], int *i);
-unsigned int	ft_printf_atoi(char const str[], int *i);
+t_flags	ft_printf_getflags(char const *str[]);
+t_uint	ft_printf_atoi(char const *str[]);
 #endif
