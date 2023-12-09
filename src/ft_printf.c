@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/09 17:04:18 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:12:11 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
 			ft_putunbr(info.width, 10, 0);
 			len += get_numudigits(info.width, 10);
 		}
-		if (info.precision != -1)
+		if (flags & PRECISION_DEFINED)
 		{
 			write(1, ".", 1);
 			ft_putunbr(info.precision, 10, 0);
@@ -81,16 +81,27 @@ static ssize_t	ft_printf_transform(char const *format[], va_list args)
 	t_flags	flags;
 	t_nums	info;
 
-	*i = 1;
-	flags = ft_printf_getflags(format + *i, i);
-	info.width = ft_printf_atoi(format + *i, i);
-	info.precision = -1;
-	if (format[*i] == '.')
+	flags = ft_printf_getflags(format);
+	if (**format == '*')
 	{
-		(*i)++;
-		info.precision = ft_printf_atoi(format + *i, i);
+		info.width = va_arg(args, t_uint);
+		(*format)++;
 	}
-	len = ft_printf_format(format[*i], flags, info, args);
+	else
+		info.width = ft_printf_atoi(format);
+	if (**format == '.')
+	{
+		(*format)++;
+		flags |= PRECISION_DEFINED;
+		if (**format == '*')
+		{
+			info.precision = va_arg(args, t_uint);
+			(*format)++;
+		}
+		else
+			info.precision = ft_printf_atoi(format);
+	}
+	len = ft_printf_format(**format, flags, info, args);
 	if (len == -1)
 	{
 		len = ft_printf_fail(*format, flags, info);
