@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/19 18:41:49 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:57:40 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ static ssize_t	ft_printfintpp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
-	if (info.width > info.precision + symbol)
+	if (info.size.width > info.size.precision + symbol)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_char(info.width - (info.precision + symbol), ' ');
+			padding_char(info.size.width - (info.size.precision + symbol), ' ');
 		ft_printfint_symbol(info.nbr, flags);
-		padding_char(info.precision - info.len, '0');
-		ft_putnbr(info.nbr);
+		padding_char(info.size.precision - info.len, '0');
+		ft_putnbr(info.nbr, info.len);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - (info.precision + symbol), ' ');
-		len = info.width;
+			padding_char(info.size.width - (info.size.precision + symbol), ' ');
+		len = info.size.width;
 	}
 	else
 	{
 		ft_printfint_symbol(info.nbr, flags);
-		padding_char(info.precision - info.len, '0');
-		ft_putnbr(info.nbr);
-		len = info.precision + symbol;
+		padding_char(info.size.precision - info.len, '0');
+		ft_putnbr(info.nbr, info.len);
+		len = info.size.precision + symbol;
 	}
 	return (len);
 }
@@ -60,22 +60,22 @@ static ssize_t	ft_printfintnp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
-	if (info.width > info.len + symbol)
+	if (info.size.width > info.len + symbol)
 	{
 		if (!(flags & LEFT_JUSTIFY))
-			padding_char(info.width - (info.len + symbol), ' ');
+			padding_char(info.size.width - (info.len + symbol), ' ');
 		ft_printfint_symbol(info.nbr, flags);
 		if (info.len > 0)
-			ft_putnbr(info.nbr);
+			ft_putnbr(info.nbr, info.len);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - (info.len + symbol), ' ');
-		len = info.width;
+			padding_char(info.size.width - (info.len + symbol), ' ');
+		len = info.size.width;
 	}
 	else
 	{
 		ft_printfint_symbol(info.nbr, flags);
 		if (info.len > 0)
-			ft_putnbr(info.nbr);
+			ft_putnbr(info.nbr, info.len);
 		len = info.len + symbol;
 	}
 	return (len);
@@ -85,22 +85,22 @@ ssize_t	ft_printfintn(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
-	if (info.width > info.len + symbol)
+	if (info.size.width > info.len + symbol)
 	{
 		if (!(flags & ZERO_PADDING) && !(flags & LEFT_JUSTIFY))
-			padding_char(info.width - (info.len + symbol), ' ');
+			padding_char(info.size.width - (info.len + symbol), ' ');
 		ft_printfint_symbol(info.nbr, flags);
 		if (flags & ZERO_PADDING && !(flags & LEFT_JUSTIFY))
-			padding_char(info.width - (info.len + symbol), '0');
-		ft_putnbr(info.nbr);
+			padding_char(info.size.width - (info.len + symbol), '0');
+		ft_putnbr(info.nbr, info.len);
 		if (flags & LEFT_JUSTIFY)
-			padding_char(info.width - (info.len + symbol), ' ');
-		len = info.width;
+			padding_char(info.size.width - (info.len + symbol), ' ');
+		len = info.size.width;
 	}
 	else
 	{
 		ft_printfint_symbol(info.nbr, flags);
-		ft_putnbr(info.nbr);
+		ft_putnbr(info.nbr, info.len);
 		len = info.len + symbol;
 	}
 	return (len);
@@ -110,9 +110,9 @@ ssize_t	ft_printfintp(t_info info, int symbol, t_flags flags)
 {
 	ssize_t	len;
 
-	if (info.precision == 0 && info.nbr == 0)
+	if (info.size.precision == 0 && info.nbr == 0)
 		info.len = 0;
-	if (info.precision > info.len)
+	if (info.size.precision > info.len)
 		len = ft_printfintpp(info, symbol, flags);
 	else
 		len = ft_printfintnp(info, symbol, flags);

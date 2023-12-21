@@ -6,19 +6,29 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/11/19 18:07:53 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:02:40 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
 
 #include "libft/libft.h"
 
 void	padding_char(ssize_t len, char c)
 {
-	while (len-- > 0)
-		write(1, &c, 1);
+	char	*padding;
+
+	padding = malloc(len * sizeof(char));
+	if (!padding)
+	{
+		ft_putendl_fd("Allocation error in padding_char()", 2);
+		return ;
+	}
+	ft_memset(padding, c, len);
+	write(1, padding, len);
+	free(padding);
 }
 
 void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase)
@@ -31,20 +41,28 @@ void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase)
 		ft_putchar_fd("0123456789abcdef"[nbr % base], 1);
 }
 
-void	ft_putnbr(int nbr)
+void	ft_putnbr(int nbr, int len)
 {
-	if (nbr < 0)
+	char	*numbers;
+	int		numdigits;
+
+	numdigits = len;
+	numbers = ft_malloc(numdigits * sizeof(char));
+	if (!numbers)
 	{
-		if (nbr <= -10)
-			ft_putnbr(-(nbr / 10));
-		ft_putchar_fd(-(nbr % 10) + '0', 1);
+		ft_putendl_fd("Allocation error in ft_putnbr()", 2);
+		return ;
 	}
-	else
+	while (nbr)
 	{
-		if (nbr >= 10)
-			ft_putnbr(nbr / 10);
-		ft_putchar_fd(nbr % 10 + '0', 1);
+		if (nbr < 0)
+			numbers[--numdigits] = -(nbr % 10) + '0';
+		else
+			numbers[--numdigits] = nbr % 10 + '0';
+		nbr /= 10;
 	}
+	write(1, numbers, len);
+	free(numbers);
 }
 
 int	get_numudigits(unsigned long nbr, int base)
