@@ -21,7 +21,8 @@ typedef enum e_flags
 	SIGN_SYMBOL = (1 << 1),
 	SPACE_SIGN = (1 << 2),
 	ALTERNATE_FORM = (1 << 3),
-	ZERO_PADDING = (1 << 4)
+	ZERO_PADDING = (1 << 4),
+	PRECISION_DEFINED = (1 << 5)
 }	t_flags;
 
 t_flags	ft_printf_getflags(char const *str[]);
