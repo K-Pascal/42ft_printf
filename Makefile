@@ -46,6 +46,12 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(BUILDDIR)
 	$(CC) $(CFLAGS) $(GDB) -c -I . -I $(INCLUDEDIR) $< -o $@
 
+myprintf: main.c $(NAME)
+	$(CC) $(GDB) -I . -I $(INCLUDEDIR) main.c -L . -lftprintf -o $@
+
+cleanprintf:
+	rm -f myprintf
+
 .PHONY: bonus norm
 bonus: all
 
