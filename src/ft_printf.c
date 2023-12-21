@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/09 17:12:11 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:36:28 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@
 #include "ft_printfints.h"
 #include "ft_printfutils.h"
 
-static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums info)
+static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums size)
 {
 	ssize_t	len;
 
 	len = -1;
-	if (*str != '\0')
+	if (*str == '\0')
+		return (-1);
+	len = write(1, "%", 1);
+	if (flags & ALTERNATE_FORM)
+		len += write(1, "#", 1);
+	if (flags & SIGN_SYMBOL)
+		len += write(1, "+", 1);
+	if (flags & LEFT_JUSTIFY)
+		len += write(1, "-", 1);
+	if (size.width > 0)
 	{
-		len = write(1, "%", 1);
-		if (flags & ALTERNATE_FORM)
-			len += write(1, "#", 1);
-		if (flags & SIGN_SYMBOL)
-			len += write(1, "+", 1);
-		if (flags & LEFT_JUSTIFY)
-			len += write(1, "-", 1);
-		if (info.width > 0)
-		{
-			ft_putunbr(info.width, 10, 0);
-			len += get_numudigits(info.width, 10);
-		}
-		if (flags & PRECISION_DEFINED)
-		{
-			write(1, ".", 1);
-			ft_putunbr(info.precision, 10, 0);
-			len += get_numudigits(info.precision, 10) + 1;
-		}
+		ft_putunbr(size.width, 10, 0);
+		len += get_numudigits(size.width, 10);
 	}
+	if (flags & PRECISION_DEFINED)
+	{
+		len += write(1, ".", 1);
+		ft_putunbr(size.precision, 10, 0);
+		len += get_numudigits(size.precision, 10);
+	}
+	len += write(1, str, 1);
 	return (len);
 }
 
@@ -79,35 +79,31 @@ static ssize_t	ft_printf_transform(char const *format[], va_list args)
 {
 	ssize_t	len;
 	t_flags	flags;
-	t_nums	info;
+	t_nums	size;
 
 	flags = ft_printf_getflags(format);
 	if (**format == '*')
 	{
-		info.width = va_arg(args, t_uint);
+		size.width = va_arg(args, t_uint);
 		(*format)++;
 	}
 	else
-		info.width = ft_printf_atoi(format);
+		size.width = ft_printf_atoi(format);
 	if (**format == '.')
 	{
 		(*format)++;
 		flags |= PRECISION_DEFINED;
 		if (**format == '*')
 		{
-			info.precision = va_arg(args, t_uint);
+			size.precision = va_arg(args, t_uint);
 			(*format)++;
 		}
 		else
-			info.precision = ft_printf_atoi(format);
+			size.precision = ft_printf_atoi(format);
 	}
-	len = ft_printf_format(**format, flags, info, args);
+	len = ft_printf_format(**format, flags, size, args);
 	if (len == -1)
-	{
-		len = ft_printf_fail(*format, flags, info);
-		if (len != -1)
-			len += write(1, *format, 1);
-	}
+		len = ft_printf_fail(*format, flags, size);
 	return (len);
 }
 
