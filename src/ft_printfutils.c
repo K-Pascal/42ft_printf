@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 16:02:40 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:30:50 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_putnbr(int nbr, int len)
 	int		numdigits;
 
 	numdigits = len;
-	numbers = ft_malloc(numdigits * sizeof(char));
+	numbers = malloc(numdigits * sizeof(char));
 	if (!numbers)
 	{
 		ft_putendl_fd("Allocation error in ft_putnbr()", 2);
