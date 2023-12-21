@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 14:36:28 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:49:51 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums size)
 	return (len);
 }
 
-ssize_t	ft_printf_format(char const c, t_flags flags, t_nums info, va_list ap)
+ssize_t	ft_printf_format(char const c, t_flags flags, t_nums size, va_list ap)
 {
 	ssize_t	len;
 
 	if (c == 'c')
-		len = ft_printfchar(ap, flags, info.width);
+		len = ft_printfchar(ap, flags, size);
 	else if (c == 's')
-		len = ft_printfstr(ap, flags, info.width, info.precision);
+		len = ft_printfstr(ap, flags, size);
 	else if (c == 'p')
-		len = ft_printfptr(ap, flags, info.width);
+		len = ft_printfptr(ap, flags, size);
 	else if (c == 'd' || c == 'i')
-		len = ft_printfint(ap, flags, info.width, info.precision);
+		len = ft_printfint(ap, flags, size);
 	else if (c == 'u')
-		len = ft_printfuint(ap, flags, info.width, info.precision);
+		len = ft_printfuint(ap, flags, size);
 	else if (c == 'x')
-		len = ft_printfhex(ap, flags, info.width, info.precision);
+		len = ft_printfhex(ap, flags, size);
 	else if (c == 'X')
-		len = ft_printfhexu(ap, flags, info.width, info.precision);
+		len = ft_printfhexu(ap, flags, size);
 	else if (c == '%')
 		len = write(1, "%", 1);
 	else
