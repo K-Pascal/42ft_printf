@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:30:50 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:40:59 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,44 @@ void	padding_char(ssize_t len, char c)
 	free(padding);
 }
 
-void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase)
+void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase, ssize_t len)
 {
+	char		*numbers;
+	char const	*hex;
+	int			numdigits;
+
+	if (uppercase)
+		hex = "0123456789ABCDEF";
+	else
+		hex = "0123456789abcdef";
+	numdigits = len;
+	numbers = malloc(numdigits * sizeof(char));
+	if (!numbers)
+	{
+		ft_putendl_fd("Allocation error in ft_putunbr()", 2);
+		return ;
+	}
+	while (nbr)
+	{
+		if (nbr < 0)
+			numbers[--numdigits] = hex[-nbr % base];
+		else
+			numbers[--numdigits] = hex[nbr % base];
+		nbr /= base;
+	}
+	write(1, numbers, len);
+	free(numbers);
+/*
 	if (nbr >= base)
 		ft_putunbr(nbr / base, base, uppercase);
 	if (uppercase)
 		ft_putchar_fd("0123456789ABCDEF"[nbr % base], 1);
 	else
 		ft_putchar_fd("0123456789abcdef"[nbr % base], 1);
+*/
 }
 
-void	ft_putnbr(int nbr, int len)
+void	ft_putnbr(int nbr, ssize_t len)
 {
 	char	*numbers;
 	int		numdigits;

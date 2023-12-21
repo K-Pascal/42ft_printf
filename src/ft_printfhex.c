@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:43:41 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 15:47:10 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:39:58 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static ssize_t	ft_printfhexpp(t_uinfo info, t_flags flags, int sym, int upper)
 			padding_char(info.size.width - (info.size.precision + sym), ' ');
 		ft_printfhexprefix(info.nbr, flags, upper);
 		padding_char(info.size.precision - info.len, '0');
-		ft_putunbr(info.nbr, 16, upper);
+		ft_putunbr(info.nbr, 16, upper, info.len);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(info.size.width - (info.size.precision + sym), ' ');
 		len = info.size.width;
@@ -48,7 +48,7 @@ static ssize_t	ft_printfhexpp(t_uinfo info, t_flags flags, int sym, int upper)
 	{
 		ft_printfhexprefix(info.nbr, flags, upper);
 		padding_char(info.size.precision - info.len, '0');
-		ft_putunbr(info.nbr, 16, upper);
+		ft_putunbr(info.nbr, 16, upper, info.len);
 		len = info.size.precision + sym;
 	}
 	return (len);
@@ -64,7 +64,7 @@ static ssize_t	ft_printfhexnp(t_uinfo info, t_flags flags, int sym, int upper)
 			padding_char(info.size.width - (info.len + sym), ' ');
 		ft_printfhexprefix(info.nbr, flags, upper);
 		if (info.len > 0)
-			ft_putunbr(info.nbr, 16, upper);
+			ft_putunbr(info.nbr, 16, upper, info.len);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(info.size.width - (info.len + sym), ' ');
 		len = info.size.width;
@@ -73,7 +73,7 @@ static ssize_t	ft_printfhexnp(t_uinfo info, t_flags flags, int sym, int upper)
 	{
 		ft_printfhexprefix(info.nbr, flags, upper);
 		if (info.len > 0)
-			ft_putunbr(info.nbr, 16, upper);
+			ft_putunbr(info.nbr, 16, upper, info.len);
 		len = info.len + sym;
 	}
 	return (len);
@@ -90,7 +90,7 @@ ssize_t	ft_printfhexn(t_uinfo info, t_flags flags, int symbol, int uppercase)
 		ft_printfhexprefix(info.nbr, flags, uppercase);
 		if (flags & ZERO_PADDING && !(flags & LEFT_JUSTIFY))
 			padding_char(info.size.width - (info.len + symbol), '0');
-		ft_putunbr(info.nbr, 16, uppercase);
+		ft_putunbr(info.nbr, 16, uppercase, info.len);
 		if (flags & LEFT_JUSTIFY)
 			padding_char(info.size.width - (info.len + symbol), ' ');
 		len = info.size.width;
@@ -98,7 +98,7 @@ ssize_t	ft_printfhexn(t_uinfo info, t_flags flags, int symbol, int uppercase)
 	else
 	{
 		ft_printfhexprefix(info.nbr, flags, uppercase);
-		ft_putunbr(info.nbr, 16, uppercase);
+		ft_putunbr(info.nbr, 16, uppercase, info.len);
 		len = info.len + symbol;
 	}
 	return (len);
