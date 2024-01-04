@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 15:49:51 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:38:06 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums size)
 {
 	ssize_t	len;
+	t_uint	numlen;
 
-	len = -1;
 	if (*str == '\0')
 		return (-1);
 	len = write(1, "%", 1);
@@ -37,14 +37,16 @@ static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums size)
 		len += write(1, "-", 1);
 	if (size.width > 0)
 	{
-		ft_putunbr(size.width, 10, 0);
-		len += get_numudigits(size.width, 10);
+		numlen = get_numudigits(size.width, 10);
+		ft_putunbr(size.width, 10, 0, numlen);
+		len += numlen;
 	}
 	if (flags & PRECISION_DEFINED)
 	{
 		len += write(1, ".", 1);
-		ft_putunbr(size.precision, 10, 0);
-		len += get_numudigits(size.precision, 10);
+		numlen = get_numudigits(size.precision, 10);
+		ft_putunbr(size.precision, 10, 0, numlen);
+		len += numlen;
 	}
 	len += write(1, str, 1);
 	return (len);
