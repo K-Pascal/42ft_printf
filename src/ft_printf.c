@@ -147,7 +147,7 @@ int	ft_printf(char const format[], ...)
 			i = 0;
 		}
 	}
-	if (len_total != -1)
+	if (len_total != -1 && i > 0)
 		len_total += write(1, format, i);
 	va_end(args);
 	return (len_total);
