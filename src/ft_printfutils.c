@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:40:59 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:40:14 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase, ssize_t len
 	char const	*hex;
 	int			numdigits;
 
+	if (nbr == 0)
+	{
+		write(1, "0", 1);
+		return ;
+	}
 	if (uppercase)
 		hex = "0123456789ABCDEF";
 	else
@@ -58,14 +63,6 @@ void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase, ssize_t len
 	}
 	write(1, numbers, len);
 	free(numbers);
-/*
-	if (nbr >= base)
-		ft_putunbr(nbr / base, base, uppercase);
-	if (uppercase)
-		ft_putchar_fd("0123456789ABCDEF"[nbr % base], 1);
-	else
-		ft_putchar_fd("0123456789abcdef"[nbr % base], 1);
-*/
 }
 
 void	ft_putnbr(int nbr, ssize_t len)
@@ -73,6 +70,11 @@ void	ft_putnbr(int nbr, ssize_t len)
 	char	*numbers;
 	int		numdigits;
 
+	if (nbr == 0)
+	{
+		write(1, "0", 1);
+		return ;
+	}
 	numdigits = len;
 	numbers = malloc(numdigits * sizeof(char));
 	if (!numbers)
