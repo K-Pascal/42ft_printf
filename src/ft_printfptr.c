@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:29:05 by pnguyen-          #+#    #+#             */
-/*   Updated: 2024/01/04 10:17:40 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:35:40 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <sys/types.h>
 
 #include "libft/libft.h"
-#include "ft_printf.h"
-#include "ft_printfparser.h"
+
 #include "ft_printfutils.h"
+#include "typedefs.h"
 
 static ssize_t	ft_printfhexnull(t_flags flags, t_nums size)
 {

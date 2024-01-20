@@ -6,17 +6,15 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:19:40 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 15:57:40 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:30:43 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <sys/types.h>
 
-#include "ft_printf.h"
-#include "ft_printfparser.h"
 #include "ft_printfutils.h"
-#include "ft_printfints.h"
+#include "typedefs.h"
 
 static void	ft_printfint_symbol(int nbr, t_flags flags)
 {

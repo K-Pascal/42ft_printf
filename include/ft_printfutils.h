@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:43:33 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:41:11 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:29:12 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <sys/types.h>
 
-# include "ft_printf.h"
+# include "typedefs.h"
 
 void	padding_char(ssize_t len, char c);
 int		get_numudigits(unsigned long nbr, int base);

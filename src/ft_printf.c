@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:29:21 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:38:06 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:32:41 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include <unistd.h>
 
 #include "libft/libft.h"
-#include "ft_printf.h"
+
 #include "ft_printfparser.h"
 #include "ft_printfchars.h"
 #include "ft_printfints.h"
 #include "ft_printfutils.h"
+#include "typedefs.h"
 
 static ssize_t	ft_printf_fail(char const str[], t_flags flags, t_nums size)
 {

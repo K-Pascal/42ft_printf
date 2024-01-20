@@ -6,17 +6,15 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:43:41 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:39:58 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:30:46 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "ft_printf.h"
-#include "ft_printfparser.h"
 #include "ft_printfutils.h"
-#include "ft_printfints.h"
+#include "typedefs.h"
 
 static void	ft_printfhexprefix(unsigned int nbr, t_flags flags, int uppercase)
 {

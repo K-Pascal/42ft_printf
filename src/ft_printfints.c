@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:37:03 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 15:43:47 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:34:07 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "ft_printf.h"
-#include "ft_printfparser.h"
-#include "ft_printfints.h"
-#include "ft_printfint.h"
-#include "ft_printfuint.h"
 #include "ft_printfhex.h"
+#include "ft_printfint.h"
+#include "ft_printfints.h"
+#include "ft_printfuint.h"
+#include "ft_printfutils.h"
+#include "typedefs.h"
 
 ssize_t	ft_printfint(va_list ap, t_flags flags, t_nums size)
 {

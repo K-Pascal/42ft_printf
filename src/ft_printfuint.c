@@ -6,17 +6,16 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:57:59 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/21 17:39:17 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:32:00 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "ft_printf.h"
-#include "ft_printfparser.h"
-#include "ft_printfutils.h"
 #include "ft_printfints.h"
+#include "ft_printfutils.h"
+#include "typedefs.h"
 
 static ssize_t	ft_printfuintpp(t_uinfo info, t_flags flags)
 {

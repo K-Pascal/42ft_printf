@@ -6,13 +6,13 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:14:08 by pnguyen-          #+#    #+#             */
-/*   Updated: 2023/12/09 16:17:54 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:31:33 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "ft_printfparser.h"
 #include "libft/libft.h"
+
+#include "typedefs.h"
 
 t_flags	ft_printf_getflags(char const *str[])
 {
