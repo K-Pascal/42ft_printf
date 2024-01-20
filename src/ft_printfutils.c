@@ -6,7 +6,7 @@
 /*   By: pnguyen- <pnguyen-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:42:44 by pnguyen-          #+#    #+#             */
-/*   Updated: 2024/01/04 10:40:14 by pnguyen-         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:01:46 by pnguyen-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ void	ft_putunbr(unsigned long nbr, unsigned int base, int uppercase, ssize_t len
 	}
 	while (nbr)
 	{
-		if (nbr < 0)
-			numbers[--numdigits] = hex[-nbr % base];
-		else
-			numbers[--numdigits] = hex[nbr % base];
+		numbers[--numdigits] = hex[nbr % base];
 		nbr /= base;
 	}
 	write(1, numbers, len);
